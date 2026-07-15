@@ -1,0 +1,22 @@
+{
+  "name": "stadiumpulse-backend",
+  "version": "1.0.0",
+  "description": "StadiumPulse AI Command Center - Express.js backend",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "@google-cloud/vertexai": "^1.1.0",
+    "@google/generative-ai": "^0.14.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}

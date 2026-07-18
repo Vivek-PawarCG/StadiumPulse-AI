@@ -163,31 +163,49 @@ class AIService {
         food: "Concession C (Sec 215) currently has the shortest queue (under 5 mins). They serve Fresh Pizzas!",
         exit: "Gate 4 on the West Plaza is currently clear with a wait time under 6 minutes. Avoid Gate 3.",
         gate: "Gate 4 is the fastest entry/exit. Gate 2 and Gate 3 have heavy queue times.",
+        medical: "The nearest medical aid station is located at First Aid Room A, next to Section 109 on the main concourse.",
+        transit: "Clean transit options include the Electric Shuttle from Gate 4 (5-min wait) or the Metro Line at North Station (runs every 8 mins).",
+        sustainability: "Help us stay green: use the compost bins at Section 112, carry a reusable water bottle, and take the zero-emission electric shuttles!",
         default: "Welcome to FIFA 2026! You are near Section 112. Let me know if you need seat routes, wait times, or clean transit."
       },
       es: {
         food: "La Concesión C (Sección 215) tiene la fila más corta (menos de 5 min). ¡Sirven pizzas frescas!",
         exit: "La Puerta 4 en la Plaza Oeste está despejada, con un tiempo de espera de menos de 6 minutos.",
         gate: "La Puerta 4 es la más rápida. Evite las Puertas 2 y 3 debido a la alta congestión.",
+        medical: "La estación de primeros auxilios más cercana se encuentra en la Sala de Auxilio A, al lado de la Sección 109 en el pasillo principal.",
+        transit: "Las opciones de transporte ecológico incluyen el transbordador eléctrico desde la Puerta 4 (espera de 5 min) o la línea de metro en la estación norte (cada 8 min).",
+        sustainability: "Ayúdenos a mantener el verde: use los contenedores de compostaje en la Sección 112, lleve una botella de agua reusable y tome los transbordadores eléctricos.",
         default: "¡Bienvenido a la Copa Mundial FIFA 2026! Estoy aquí para ayudarle con rutas, comida y transporte ecológico."
       },
       fr: {
         food: "La Concession C (Sec 215) a la file d'attente la plus courte (moins de 5 min). Ils servent des pizzas fraîches !",
         exit: "La porte 4 sur la West Plaza est actuellement dégagée avec une attente de moins de 6 minutes.",
         gate: "La porte 4 est l'accès le plus rapide. Évitez les portes 2 et 3 en raison de l'affluence.",
+        medical: "Le poste de secours le plus proche est situé à la salle de premiers secours A, à côté de la section 109 sur le hall principal.",
+        transit: "Les options de transport propre comprennent la navette électrique depuis la porte 4 (5 min d'attente) ou la ligne de métro à la gare nord (toutes les 8 min).",
+        sustainability: "Aidez-nous à rester éco-responsables : utilisez les bacs de compostage à la Section 112, apportez une gourde réutilisable et prenez les navettes électriques.",
         default: "Bienvenue à la Coupe du Monde de la FIFA 2026 ! Je suis là pour vous aider avec les itinéraires et le transit."
       }
     };
 
     const langSet = responses[language] || responses['en'];
-    if (lower.includes('food') || lower.includes('comida') || lower.includes('nourriture') || lower.includes('taco') || lower.includes('pizza')) {
+    if (lower.includes('food') || lower.includes('comida') || lower.includes('nourriture') || lower.includes('taco') || lower.includes('pizza') || lower.includes('hambre') || lower.includes('faim')) {
       return langSet.food;
     }
-    if (lower.includes('exit') || lower.includes('salida') || lower.includes('sortie') || lower.includes('leave')) {
+    if (lower.includes('exit') || lower.includes('salida') || lower.includes('sortie') || lower.includes('leave') || lower.includes('sortir')) {
       return langSet.exit;
     }
     if (lower.includes('gate') || lower.includes('puerta') || lower.includes('porte') || lower.includes('entrada')) {
       return langSet.gate;
+    }
+    if (lower.includes('medical') || lower.includes('médic') || lower.includes('secours') || lower.includes('aid') || lower.includes('ayuda') || lower.includes('doctor') || lower.includes('docteur')) {
+      return langSet.medical;
+    }
+    if (lower.includes('transit') || lower.includes('transport') || lower.includes('shuttle') || lower.includes('bus') || lower.includes('metro') || lower.includes('métro') || lower.includes('tren') || lower.includes('train')) {
+      return langSet.transit;
+    }
+    if (lower.includes('sustain') || lower.includes('sostenib') || lower.includes('durab') || lower.includes('green') || lower.includes('verde') || lower.includes('vert') || lower.includes('recycl') || lower.includes('compost')) {
+      return langSet.sustainability;
     }
     return langSet.default;
   }

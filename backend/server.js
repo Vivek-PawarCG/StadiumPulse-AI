@@ -8,7 +8,10 @@ import incidentRoutes from './routes/incidents.js';
 import aiRoutes from './routes/ai.js';
 import stateService from './services/stateService.js';
 
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -69,9 +72,6 @@ app.use('/api/v1/incidents', incidentRoutes);
 app.use('/api/v1/ai', aiRoutes);
 
 // Serve static assets in production
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../frontend/dist')));
   app.get('*', (req, res) => {

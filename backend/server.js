@@ -29,6 +29,24 @@ const ipRequestCounts = new Map();
 const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
 const MAX_REQUESTS_PER_WINDOW = 120;
 
+// Periodic cleanup to prevent memory leaks from inactive IPs
+const cleanupInterval = setInterval(() => {
+  const now = Date.now();
+  for (const [ip, requestTimes] of ipRequestCounts.entries()) {
+    const activeRequests = requestTimes.filter(time => now - time < RATE_LIMIT_WINDOW);
+    if (activeRequests.length === 0) {
+      ipRequestCounts.delete(ip);
+    } else {
+      ipRequestCounts.set(ip, activeRequests);
+    }
+  }
+}, 5 * 60 * 1000);
+
+// Ensure the interval timer doesn't prevent Node process termination during tests
+if (cleanupInterval.unref) {
+  cleanupInterval.unref();
+}
+
 const rateLimiter = (req, res, next) => {
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
   const now = Date.now();

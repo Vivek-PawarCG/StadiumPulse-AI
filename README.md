@@ -114,6 +114,18 @@ npm run dev
 
 ---
 
+## 🧪 Testing
+
+StadiumPulse AI includes a unit test suite to verify state management, simulation state changes, and the multi-lingual AI mock fallback handlers. The tests are written using the built-in, lightweight Node.js test runner.
+
+To execute the test suite, run the following command at the **root** of the workspace:
+
+```bash
+npm test
+```
+
+---
+
 ## 📦 Production Deployment
 
 For step-by-step instructions on deploying StadiumPulse AI containerized to **Google Cloud Run** using Google Cloud Build, GCP Secret Manager, and setting up SRE Latency Alerts on Cloud Monitoring, follow the details in the [GCP Deployment Guide](file:///c:/Users/vivpawar/Downloads/Something%20New/2026_Projects/StadiumPulse-AI/gcp_deploy_guide.md).

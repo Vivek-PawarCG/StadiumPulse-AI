@@ -78,7 +78,7 @@ class StateService {
 
   // Live Simulation Engine
   startSimulation() {
-    setInterval(() => {
+    this.simulationInterval = setInterval(() => {
       // 1. Simulating headcounts & queue wait times at sensors
       this.sensors = this.sensors.map(sensor => {
         // Random drift up or down by max 8%
@@ -131,6 +131,13 @@ class StateService {
       this.sustainability.wasteKg[binType] += Math.round(Math.random() * 2);
 
     }, 8000); // Trigger adjustments every 8 seconds
+  }
+
+  stopSimulation() {
+    if (this.simulationInterval) {
+      clearInterval(this.simulationInterval);
+      this.simulationInterval = null;
+    }
   }
 }
 

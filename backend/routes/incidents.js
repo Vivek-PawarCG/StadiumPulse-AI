@@ -42,13 +42,16 @@ router.post('/', async (req, res) => {
     console.log(`🧠 Triggering Vertex AI safety protocol for: ${title}`);
     const aiResponse = await aiService.generateSafetyResponse(title, location, category);
 
+    const instructions = aiResponse?.instructions || "Dispatch standard patrol to inspect and report.";
+    const rerouteAdvice = aiResponse?.rerouteAdvice || "Keep visual watch on pedestrian movement.";
+
     // Create incident log and record
     const incidentData = {
       title,
       category,
       priority,
       location,
-      aiResolution: aiResponse.instructions + "\n\n" + `Rerouting Guidance: ${aiResponse.rerouteAdvice}`
+      aiResolution: `${instructions}\n\nRerouting Guidance: ${rerouteAdvice}`
     };
 
     const newIncident = stateService.addIncident(incidentData);

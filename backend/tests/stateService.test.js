@@ -3,9 +3,6 @@ import assert from 'node:assert';
 import stateService from '../services/stateService.js';
 
 test('StateService initialization and initial values', (t) => {
-  // Stop simulation immediately to prevent timers running during tests
-  stateService.stopSimulation();
-
   const sensors = stateService.getSensors();
   const transit = stateService.getTransit();
   const incidents = stateService.getIncidents();
@@ -20,8 +17,6 @@ test('StateService initialization and initial values', (t) => {
 });
 
 test('StateService Incident Management', (t) => {
-  stateService.stopSimulation();
-  
   const initialCount = stateService.getIncidents().length;
   
   // Add a new incident
@@ -54,8 +49,6 @@ test('StateService Incident Management', (t) => {
 });
 
 test('StateService Logging System', (t) => {
-  stateService.stopSimulation();
-
   const initialLogsCount = stateService.getLogs().length;
 
   stateService.addLog('SYSTEM', 'TEST_ACTION', 'This is a test log message');

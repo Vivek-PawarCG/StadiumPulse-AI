@@ -9,8 +9,15 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
-const GCP_PROJECT = process.env.GCP_PROJECT || process.env.GOOGLE_CLOUD_PROJECT || '';
+const cleanEnvVar = (val, placeholder) => {
+  if (!val || val === placeholder || val.trim() === '') {
+    return '';
+  }
+  return val;
+};
+
+const GEMINI_API_KEY = cleanEnvVar(process.env.GEMINI_API_KEY, 'your_gemini_api_key_here');
+const GCP_PROJECT = cleanEnvVar(process.env.GCP_PROJECT || process.env.GOOGLE_CLOUD_PROJECT, 'your_gcp_project_id_here');
 const GCP_LOCATION = process.env.GCP_LOCATION || 'us-central1';
 
 let geminiClient = null;

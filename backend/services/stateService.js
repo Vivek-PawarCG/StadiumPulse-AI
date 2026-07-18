@@ -131,6 +131,10 @@ class StateService {
       this.sustainability.wasteKg[binType] += Math.round(Math.random() * 2);
 
     }, 8000); // Trigger adjustments every 8 seconds
+
+    if (this.simulationInterval && this.simulationInterval.unref) {
+      this.simulationInterval.unref();
+    }
   }
 
   stopSimulation() {

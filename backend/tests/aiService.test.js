@@ -4,8 +4,6 @@ import aiService from '../services/aiService.js';
 import stateService from '../services/stateService.js';
 
 test('AIService - getMockFanResponse for EN queries', (t) => {
-  stateService.stopSimulation();
-
   // Food
   const enFood = aiService.getMockFanResponse("Where is the food?", "en");
   assert.ok(enFood.includes("Concession C"), "Should match food Concession C");
@@ -36,8 +34,6 @@ test('AIService - getMockFanResponse for EN queries', (t) => {
 });
 
 test('AIService - getMockFanResponse for ES (Spanish) queries', (t) => {
-  stateService.stopSimulation();
-
   // Food
   const esFood = aiService.getMockFanResponse("¿Dónde hay comida?", "es");
   assert.ok(esFood.includes("Concesión C"), "Should match food Concesión C");
@@ -52,8 +48,6 @@ test('AIService - getMockFanResponse for ES (Spanish) queries', (t) => {
 });
 
 test('AIService - getMockFanResponse for FR (French) queries', (t) => {
-  stateService.stopSimulation();
-
   // Food
   const frFood = aiService.getMockFanResponse("Où trouver de la nourriture?", "fr");
   assert.ok(frFood.includes("Concession C"), "Should match food Concession C");
@@ -64,8 +58,6 @@ test('AIService - getMockFanResponse for FR (French) queries', (t) => {
 });
 
 test('AIService - generateFanResponse Fallback Behavior', async (t) => {
-  stateService.stopSimulation();
-
   // Test that generateFanResponse works even if geminiClient fails or is missing (goes to mock)
   const response = await aiService.generateFanResponse("Sustainable tips for fans.", "en");
   assert.ok(response.includes("compost bins") || response.includes("green"), "Should return sustainability mock response under fallback");

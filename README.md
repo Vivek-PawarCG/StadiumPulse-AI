@@ -116,9 +116,12 @@ npm run dev
 
 ## 🧪 Testing
 
-StadiumPulse AI includes a unit test suite to verify state management, simulation state changes, and the multi-lingual AI mock fallback handlers. The tests are written using the built-in, lightweight Node.js test runner.
+StadiumPulse AI includes a comprehensive test suite covering both the server-side logic and client-side user interface:
 
-To execute the test suite, run the following command at the **root** of the workspace:
+* **Backend Tests**: Written using Node.js's built-in, lightweight test runner (`node --test`), verifying StateService simulation state changes, incident mutations, log capping, direct Gemini query parsing in EN/ES/FR, and full Express API integrations.
+* **Frontend Tests**: Powered by **Vitest** and **Happy DOM**, rendering and validating the React-based `FanAssistant` component, accessibility controls, and language toggle actions.
+
+To execute both backend and frontend test suites in sequence, run the following command at the **root** of the workspace:
 
 ```bash
 npm test

@@ -16,9 +16,13 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Enable CORS for frontend port (3000)
+// Enable CORS with environment-aware origin restriction
+const ALLOWED_ORIGINS = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',')
+  : ['http://localhost:3000'];
+
 app.use(cors({
-  origin: '*',
+  origin: ALLOWED_ORIGINS,
   methods: ['GET', 'POST', 'PATCH', 'OPTIONS']
 }));
 
@@ -102,14 +106,25 @@ app.use((err, req, res, next) => {
   console.error("🔥 Server Error:", err.stack);
   stateService.addLog("SYSTEM", "ERROR_THROWN", err.message);
   
+  // Avoid leaking internal error details in production
+  const clientMessage = process.env.NODE_ENV === 'production'
+    ? 'An unexpected error occurred. Please try again later.'
+    : err.message;
+
   res.status(500).json({
     error: "Internal Server Error",
-    message: err.message
+    message: clientMessage
   });
 });
 
-// Start Server Listener
-app.listen(PORT, () => {
-  console.log(`🚀 StadiumPulse AI Server listening on port ${PORT}`);
-  stateService.addLog("SYSTEM", "SERVER_STARTUP", `Express listener established on port ${PORT}`);
-});
+// Export the app for integration testing
+export { app };
+
+// Start Server Listener only when run directly (not imported by tests)
+const isDirectRun = process.argv[1] && (process.argv[1].includes('server.js') || process.argv[1].includes('start'));
+if (isDirectRun) {
+  app.listen(PORT, () => {
+    console.log(`🚀 StadiumPulse AI Server listening on port ${PORT}`);
+    stateService.addLog("SYSTEM", "SERVER_STARTUP", `Express listener established on port ${PORT}`);
+  });
+}

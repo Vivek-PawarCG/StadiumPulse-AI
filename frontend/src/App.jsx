@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Users, Shield, MessageSquare, Compass, 
   Settings, Activity, CheckCircle, RefreshCw 
@@ -19,8 +19,11 @@ export default function App() {
   const [sustainability, setSustainability] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Fetch telemetry state
-  const fetchData = async () => {
+  // Memoized fetch to prevent re-creation on each render
+  const fetchData = useCallback(async () => {
+    // Skip network requests when the tab is not visible (saves CPU & bandwidth)
+    if (document.hidden) return;
+
     try {
       const [sensorsRes, incidentsRes, transitRes, sustainabilityRes] = await Promise.all([
         fetch('/api/v1/telemetry/sensors'),
@@ -45,14 +48,14 @@ export default function App() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  // Poll state every 4 seconds to reflect the server telemetry simulation updates
+  // Poll state every 4 seconds; pause when the tab is hidden to conserve resources
   useEffect(() => {
     fetchData();
     const interval = setInterval(fetchData, 4000);
     return () => clearInterval(interval);
-  }, []);
+  }, [fetchData]);
 
   // Post new incident (triggers Vertex AI analysis)
   const handleReportIncident = async (newInc) => {

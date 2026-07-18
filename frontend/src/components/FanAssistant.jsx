@@ -153,7 +153,7 @@ export default function FanAssistant() {
       {/* SIDEBAR: ACCESSIBILITY & CONTROLS */}
       <div className={`p-4 md:w-64 border-b md:border-b-0 md:border-r flex flex-col justify-between ${
         highContrast ? 'border-yellow-400/30' : 'border-glassBorder'
-      }`}>
+      }`} role="complementary" aria-label="Accessibility Controls">
         <div className="space-y-4">
           <div className="flex items-center gap-2">
             <Languages className="text-primaryEmerald" size={18} />
@@ -263,7 +263,7 @@ export default function FanAssistant() {
       <div className="flex-1 flex flex-col h-full overflow-hidden">
         
         {/* Chat Feed */}
-        <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-darkBg/30">
+        <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-darkBg/30" role="log" aria-live="polite" aria-label="Chat messages">
           {messages.map((msg, i) => (
             <div 
               key={i} 
@@ -316,6 +316,7 @@ export default function FanAssistant() {
               value={inputValue}
               onChange={e => setInputValue(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSend()}
+              aria-label="Type your question"
               className="flex-1 bg-darkBg border border-glassBorder rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-primaryEmerald transition-colors"
             />
             
